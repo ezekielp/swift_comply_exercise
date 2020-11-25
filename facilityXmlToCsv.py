@@ -12,24 +12,40 @@ csv_writer = csv.writer(facility_data)
 # Create the header row
 csv_writer.writerow(['property_id', 'account_number', 'name', 'address1', 'address2', 'city', 'state_prov', 'country_code', 'postal_code', 'primary_contact_id', 'notes', 'addl:Hazard Type'])
 
+def getPropertyText(facility, property_name):
+  prop = facility.find(property_name)
+  if prop != None:
+    return prop.text
+  return ''
+
 for facility in root.findall('T_Facility'):
-  property_id = facility.find('Facility_ID').text
-  account_number = facility.find('Facility_Account_Number').text
-  name = facility.find('Facility_Name').text
-  address1 = facility.find('Service_Address_Street_Name').text
+  property_id = getPropertyText(facility, 'Facility_ID')
+  account_number = getPropertyText(facility, 'Facility_Account_Number')
+  name = getPropertyText(facility, 'Facility_Name')
+  address1 = getPropertyText(facility, 'Service_Address_Street_Name')
   address2 = ''
-  city = facility.find('Service_Address_City').text
-  state_prov = facility.find('Service_Address_State').text
+  city = getPropertyText(facility, 'Service_Address_City')
+  state_prov = getPropertyText(facility, 'Service_Address_State')
   country_code = 'US'
-  postal_code = facility.find('Service_Address_Zip_Code').text
-  primary_contact_id = facility.find('Facility_Contact_Mgr_ID').text
+  postal_code = getPropertyText(facility, 'Service_Address_Zip_Code')
+  primary_contact_id = getPropertyText(facility, 'Facility_Contact_Mgr_ID')
   notes = ''
   hazard_type = ''
+  # property_id = facility.find('Facility_ID').text
+  # account_number = facility.find('Facility_Account_Number').text
+  # name = facility.find('Facility_Name').text
+  # address1 = facility.find('Service_Address_Street_Name').text
+  # address2 = ''
+  # city = facility.find('Service_Address_City').text
+  # state_prov = facility.find('Service_Address_State').text
+  # country_code = 'US'
+  # postal_code = facility.find('Service_Address_Zip_Code').text
+  # primary_contact_id = facility.find('Facility_Contact_Mgr_ID').text
+  # notes = ''
+  # hazard_type = ''
 
   csv_writer.writerow([property_id, account_number, name, address1, address2, city, state_prov, country_code, postal_code, primary_contact_id, notes, hazard_type])
 
 facility_data.close()
-
-
 
 
