@@ -5,7 +5,7 @@ import csv
 tree = ET.parse("Facility.xml")
 root = tree.getroot()
 
-# Create the CSV file for transformed data
+# Create the CSV file for the transformed data
 facility_data = open('facility_properties.csv', 'w',newline='', encoding='utf-8')
 csv_writer = csv.writer(facility_data)
 
